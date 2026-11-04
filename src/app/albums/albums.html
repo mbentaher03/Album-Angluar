@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        @if(albums.length!=0){
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Genre musical</th>
+            <th>Artiste</th>
+            <th>Date de création</th>
+          </tr>
+        </thead>
+        }
+        <tbody>
+          @for (album of albums; track album.idAlbum ; let indexx=$index ; let nbr=$count ; let last=$last ; let first =$first) {
+            
+            @if(indexx==0){
+            <h1>Nomber:{{nbr}}</h1>}
+            <tr>
+              <td>{{ indexx+1 }}</td>
+              <td>{{ album.idAlbum }}</td>
+              <td>{{ album.titreAlbum }}</td>
+              <td>{{ album.genreMusical }}</td>
+              <td>{{ album.artist?.nomArtist }}</td>
+              <td>{{ album.DateAlbum | date: 'dd/MM/yyyy' }}</td>
+              <td><a class="btn btn-success" [routerLink]="['/updateAlbum', album.idAlbum]">Modifier</a></td>
+              <td><a class="btn btn-danger" (click)="supprimerAlbum(album)">Supprimer</a></td>  
+            </tr>
+          }
+
+        @empty { 
+        <h1>Aucun Album trouvé !</h1> 
+        } 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
