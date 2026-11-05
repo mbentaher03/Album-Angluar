@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Album as AlbumModel } from '../model/album.model';
 import { Artist } from '../model/artist.model';
+import { ArtistWrapper } from '../model/artist-wrapper.model';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -12,14 +14,18 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class Album {
-  readonly apiURL = 'http://localhost:8080/albums/api';
-  artists : Artist[];
+  readonly apiURL = environment.apiURL;
+  artists: Artist[];
   private albums: AlbumModel[];
   album!: AlbumModel;
 
   constructor(private http: HttpClient) {
-   this.artists = [ {idArtist : 1, nomArtist : "Charli XcX"}, 
-                        {idArtist : 2, nomArtist : "Lady Gaga"}];  
+   /* this.artists = [ {idArtist : 1, nomArtist : "Charli XcX"}, 
+                        {idArtist : 2, nomArtist : "Lady Gaga"}];   */
+    this.artists = [
+      { idArtist: 1, nomArtist: 'Charli XcX' },
+      { idArtist: 2, nomArtist: 'Lady Gaga' },
+    ];
 
     this.albums = [
       { idAlbum: 1, titreAlbum: 'BRAT', genreMusical: 'Pop', DateAlbum: new Date('2026-01-14') },
@@ -32,33 +38,53 @@ export class Album {
     return this.http.get<AlbumModel[]>(this.apiURL);
   }
 
-  consulterAlbum(id: number): AlbumModel {
-    this.album = this.albums.find((album) => album.idAlbum === id)!;
-    return this.album;
+  rechercherParArtist(idArtist: number): Observable<AlbumModel[]> {
+    const url = `${this.apiURL}/albumsartist/${idArtist}`;
+    return this.http.get<AlbumModel[]>(url);
   }
 
-  ajouterAlbum(album: AlbumModel): void {
-    this.albums.push(album);
+  rechercherParNom(titre: string): Observable<AlbumModel[]> {
+    const url = `${this.apiURL}/albumsByName/${encodeURIComponent(titre)}`;
+    return this.http.get<AlbumModel[]>(url);
   }
 
-  supprimerAlbum(album: AlbumModel): void {
-    const index = this.albums.indexOf(album);
-    if (index > -1) {
-      this.albums.splice(index, 1);
-    }
+  consulterAlbum(id: number): Observable<AlbumModel> {
+    const url = `${this.apiURL}/${id}`;
+    return this.http.get<AlbumModel>(url);
   }
 
-  modifierAlbum(album: AlbumModel): void {
-    const index = this.albums.indexOf(album, 0);
-    if (index > -1) {
-      this.albums.splice(index, 1);
-      this.albums.splice(index, 0, album);
-    }
+  ajouterAlbum(album: AlbumModel): Observable<AlbumModel> {
+    return this.http.post<AlbumModel>(this.apiURL, album, httpOptions);
   }
-  listeArtist():Artist[] { 
+
+  supprimerAlbum(id: number) {
+    const url = `${this.apiURL}/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
+
+  modifierAlbum(album: AlbumModel): Observable<AlbumModel> {
+    return this.http.put<AlbumModel>(this.apiURL, album, httpOptions);
+  }
+  listeArtist(): Observable<ArtistWrapper> {
+    return this.http.get<ArtistWrapper>(this.apiURLArtist);
+  }
+
+  ajouterArtist(artist: Artist): Observable<Artist> {
+    return this.http.post<Artist>(this.apiURLArtist, artist, httpOptions);
+  }
+
+  consulterArtist(id: number): Artist {
+    return this.artists.find((artist) => artist.idArtist === id)!;
+  }
+
+  private get apiURLArtist(): string {
+    return this.apiURL.replace(/\/api$/, '/artist');
+  }
+
+  /*listeArtist():Artist[] { 
       return this.artists; 
     } 
    consulterArtist(id:number): Artist{     
           return this.artists.find(art => art.idArtist  == id)!; 
-           }  
+           }  */
 }

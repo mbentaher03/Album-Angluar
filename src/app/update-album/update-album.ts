@@ -25,19 +25,32 @@ export class UpdateAlbum implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.artists = this.albumService.listeArtist();
+    //this.artists = this.albumService.listeArtist();
+    this.albumService.listeArtist().subscribe((response) => {
+      console.log(response);
+      this.artists = response._embedded.artists;
+    });
     const id = Number(this.activatedRoute.snapshot.params['id']);
-    this.currentAlbum = this.albumService.consulterAlbum(id);
-    this.dateAlbum = this.currentAlbum.DateAlbum?.toISOString().slice(0, 10) ?? '';
-    this.updatedArtistId = this.currentAlbum.artist?.idArtist ?? 0;
+    this.albumService.consulterAlbum(id).subscribe((album) => {
+      this.currentAlbum = album;
+      this.dateAlbum = album.DateAlbum
+        ? new Date(String(album.DateAlbum)).toISOString().slice(0, 10)
+        : '';
+      this.updatedArtistId = album.artist?.idArtist ?? 0;
+    });
   }
 
   updateAlbum(): void {
-    this.currentAlbum.artist = this.albumService.consulterArtist(this.updatedArtistId);
+    //this.currentAlbum.artist = this.albumService.consulterArtist(this.updatedArtistId);
+    this.currentAlbum.artist = this.artists.find(
+      (artist) => artist.idArtist == this.updatedArtistId,
+    )!;
     this.currentAlbum.DateAlbum = this.dateAlbum
       ? new Date(`${this.dateAlbum}T00:00:00`)
       : undefined;
-    this.albumService.modifierAlbum(this.currentAlbum);
-    this.router.navigate(['/album']);
+    this.albumService.modifierAlbum(this.currentAlbum).subscribe((album) => {
+      console.log(album);
+      this.router.navigate(['/album']);
+    });
   }
 }

@@ -1,0 +1,46 @@
+<div class="container">
+  <form class="form-inline" (submit)="$event.preventDefault()">
+    <div class="form-group mx-sm-3 mb-2 mt-2">
+      <label for="searchTerm">Titre de l’album</label>
+      <input
+        id="searchTerm"
+        type="text"
+        class="form-control"
+        [(ngModel)]="searchTerm"
+        name="searchTerm"
+      />
+    </div>
+  </form>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Genre musical</th>
+            <th>Date de l’album</th>
+            <th>Artiste</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (album of albums | searchFilter: searchTerm; track album.idAlbum) {
+            <tr>
+              <td>{{ album.idAlbum }}</td>
+              <td>{{ album.titreAlbum }}</td>
+              <td>{{ album.genreMusical }}</td>
+              <td>{{ album.DateAlbum | date: 'dd/MM/yyyy' }}</td>
+              @if (album.artist) {
+                <td>{{ album.artist.nomArtist }}</td>
+              } @else {
+                <td>PAS D’ARTISTE</td>
+              }
+              <!-- Les boutons Modifier et Supprimer sont désactivés dans cette vue. -->
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

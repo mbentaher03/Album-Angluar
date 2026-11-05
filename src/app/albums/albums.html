@@ -9,7 +9,7 @@
             <th>Id</th>
             <th>Titre</th>
             <th>Genre musical</th>
-            <th>Artiste</th>
+            <!-- <th>Artiste</th> -->
             <th>Date de création</th>
           </tr>
         </thead>
@@ -24,10 +24,12 @@
               <td>{{ album.idAlbum }}</td>
               <td>{{ album.titreAlbum }}</td>
               <td>{{ album.genreMusical }}</td>
-              <td>{{ album.artist?.nomArtist }}</td>
+              <!-- <td>{{ album.artist?.nomArtist }}</td> -->
               <td>{{ album.DateAlbum | date: 'dd/MM/yyyy' }}</td>
-              <td><a class="btn btn-success" [routerLink]="['/updateAlbum', album.idAlbum]">Modifier</a></td>
-              <td><a class="btn btn-danger" (click)="supprimerAlbum(album)">Supprimer</a></td>  
+              @if (authService.isAdmin()) {
+                <td><a class="btn btn-success" [routerLink]="['/updateAlbum', album.idAlbum]">Modifier</a></td>
+                <td><a class="btn btn-danger" (click)="supprimerAlbum(album)">Supprimer</a></td>
+              }
             </tr>
           }
 

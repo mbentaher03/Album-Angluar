@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Component, OnInit, signal } from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,26 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('Album');
+
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    const isloggedin = localStorage.getItem('isloggedIn');
+    const loggedUser = localStorage.getItem('loggedUser');
+
+    if (isloggedin !== 'true' || !loggedUser) {
+      void this.router.navigate(['/login']);
+    } else {
+      this.authService.setLoggedUserFromLocalStorage(loggedUser);
+    }
+  }
+
+  onLogout(): void {
+    this.authService.logout();
+  }
 }

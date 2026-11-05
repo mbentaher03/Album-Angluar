@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+        <app-update-artist
+          [artist]="updatedArtist"
+          [ajout]="ajout"
+          (artistUpdated)="artistUpdated($event)"
+        ></app-update-artist>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nom de l’artiste</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (artist of artists; track artist.idArtist) {
+            <tr>
+              <td>{{ artist.idArtist }}</td>
+              <td>{{ artist.nomArtist }}</td>
+              <td><a class="btn btn-success" (click)="updateArtist(artist)">Éditer</a></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

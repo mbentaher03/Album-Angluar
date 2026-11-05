@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+    <label for="idArtist">Artistes</label>
+    <select
+      class="form-control form-control-lg"
+      id="idArtist"
+      name="idArtist"
+      [(ngModel)]="idArtist"
+      (change)="onChange()"
+    >
+      <option [ngValue]="undefined" disabled>Choisir un artiste</option>
+      @for (artist of artists; track artist.idArtist) {
+        <option [ngValue]="artist.idArtist">{{ artist.nomArtist }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Genre musical</th>
+            <th>Date de l’album</th>
+            <th>Artiste</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (album of albums; track album.idAlbum) {
+            <tr>
+              <td>{{ album.idAlbum }}</td>
+              <td>{{ album.titreAlbum }}</td>
+              <td>{{ album.genreMusical }}</td>
+              <td>{{ album.DateAlbum | date: 'dd/MM/yyyy' }}</td>
+              @if (album.artist) {
+                <td>{{ album.artist.nomArtist }}</td>
+              } @else {
+                <td>PAS D’ARTISTE</td>
+              }
+              <!--
+              <td><a class="btn btn-danger">Supprimer</a></td>
+              <td><a class="btn btn-success">Modifier</a></td>
+              -->
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

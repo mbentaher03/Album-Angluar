@@ -23,17 +23,24 @@ export class AddAlbum implements OnInit {
   ) {}
 
   ngOnInit(): void {
-     this.artists = this.albumService.listeArtist(); 
+    // this.artists = this.albumService.listeArtist(); 
+    this.albumService.listeArtist().subscribe((response) => {
+      console.log(response);
+      this.artists = response._embedded.artists;
+    });
   }
 
   addAlbum(): void {
-    this.newArtist = this.albumService.consulterArtist(this.newIdArt);
+    //this.newArtist = this.albumService.consulterArtist(this.newIdArt);
+    this.newArtist = this.artists.find((artist) => artist.idArtist == this.newIdArt)!;
     this.newAlbum.artist = this.newArtist;
     this.newAlbum.DateAlbum = new Date(`${this.dateAlbum}T00:00:00`);
-    this.albumService.ajouterAlbum(this.newAlbum);
-    this.router.navigate(['/album']);
-    this.newAlbum = {};
-    this.dateAlbum = '';
+    this.albumService.ajouterAlbum(this.newAlbum).subscribe((album) => {
+      console.log(album);
+      this.router.navigate(['/album']);
+      this.newAlbum = {};
+      this.dateAlbum = '';
+    });
   }
 
 }
