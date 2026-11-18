@@ -10,12 +10,12 @@
     />
   </div>
   <div>
-    <label for="nomArtist">Nom Artiste</label>
+    <label for="nomArtiste">Nom Artiste</label>
     <input
-      id="nomArtist"
+      id="nomArtiste"
       type="text"
-      [(ngModel)]="artist.nomArtist"
-      name="nomArtist"
+      [(ngModel)]="artist.nomArtiste"
+      name="nomArtiste"
       class="form-control"
       placeholder="Entrez un nom d’artiste..."
     />
@@ -23,7 +23,7 @@
   <div class="mt-2">
     <button
       type="submit"
-      [disabled]="!artist.nomArtist"
+      [disabled]="!artist.nomArtiste"
       class="btn btn-success"
       (click)="saveArtist()"
     >

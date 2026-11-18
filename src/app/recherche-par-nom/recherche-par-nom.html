@@ -30,9 +30,9 @@
               <td>{{ album.idAlbum }}</td>
               <td>{{ album.titreAlbum }}</td>
               <td>{{ album.genreMusical }}</td>
-              <td>{{ album.DateAlbum | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ album.dateSortie | date: 'dd/MM/yyyy' }}</td>
               @if (album.artist) {
-                <td>{{ album.artist.nomArtist }}</td>
+                <td>{{ album.artist.nomArtiste }}</td>
               } @else {
                 <td>PAS D’ARTISTE</td>
               }

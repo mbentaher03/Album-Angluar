@@ -3,6 +3,6 @@ export interface Album {
   idAlbum?: number;
   titreAlbum?: string;
   genreMusical?: string;
-  DateAlbum?: Date;
+  dateSortie?: Date;
   artist? : Artist ;
 }

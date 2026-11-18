@@ -10,7 +10,7 @@
     >
       <option [ngValue]="undefined" disabled>Choisir un artiste</option>
       @for (artist of artists; track artist.idArtist) {
-        <option [ngValue]="artist.idArtist">{{ artist.nomArtist }}</option>
+        <option [ngValue]="artist.idArtist">{{ artist.nomArtiste }}</option>
       }
     </select>
   </div>
@@ -33,16 +33,12 @@
               <td>{{ album.idAlbum }}</td>
               <td>{{ album.titreAlbum }}</td>
               <td>{{ album.genreMusical }}</td>
-              <td>{{ album.DateAlbum | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ album.dateSortie | date: 'dd/MM/yyyy' }}</td>
               @if (album.artist) {
-                <td>{{ album.artist.nomArtist }}</td>
+                <td>{{ album.artist.nomArtiste }}</td>
               } @else {
                 <td>PAS D’ARTISTE</td>
               }
-              <!--
-              <td><a class="btn btn-danger">Supprimer</a></td>
-              <td><a class="btn btn-success">Modifier</a></td>
-              -->
             </tr>
           }
         </tbody>

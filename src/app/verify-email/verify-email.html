@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="row justify-content-md-center">
+    <div class="col-md-5 text-center">
+
+      <h3 class="mb-4">Vérification de votre email</h3>
+
+      @if (email) {
+        <p class="text-muted">Un code de vérification a été envoyé à <strong>{{ email }}</strong>.</p>
+      } @else {
+        <p class="text-muted">Un code de vérification a été envoyé à votre adresse email.</p>
+      }
+
+      @if (!success) {
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control text-center"
+            placeholder="Entrez votre code de vérification"
+            [(ngModel)]="token"
+          />
+        </div>
+
+        <button class="btn btn-primary" (click)="verifyToken()" [disabled]="loading">
+          @if (loading) { Vérification... } @else { Vérifier }
+        </button>
+      }
+
+      @if (message) {
+        <div class="alert mt-4" [class.alert-success]="success" [class.alert-danger]="!success">
+          {{ message }}
+        </div>
+      }
+
+      @if (success) {
+        <a routerLink="/login" class="btn btn-success mt-3">Se connecter</a>
+      }
+
+    </div>
+  </div>
+</div>

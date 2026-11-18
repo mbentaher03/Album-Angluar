@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { OnInit } from '@angular/core';
 import { Album } from '../model/album.model';
 import { Artist } from '../model/artist.model';
-import { Album as AlbumService } from '../services/album';
+import { AlbumService as AlbumService } from '../services/album';
 
 @Component({
   selector: 'app-recherche-par-artist',
@@ -20,9 +20,14 @@ export class RechercheParArtist implements OnInit {
   constructor(private albumService: AlbumService) {}
 
   ngOnInit(): void {
-    this.albumService.listeArtist().subscribe((response) => {
-      this.artists = response._embedded.artists;
-      console.log(response);
+    this.albumService.listeArtist().subscribe({
+      next: (response) => {
+        this.artists = response;
+        console.log(response);
+      },
+      error: (err) => {
+        console.error('Erreur chargement artists', err);
+      }
     });
   }
 

@@ -3,18 +3,6 @@
 
   <form #albumForm="ngForm" (ngSubmit)="addAlbum()">
     <div class="mb-3">
-      <label for="idAlbum" class="form-label">ID de l’album</label>
-      <input
-        id="idAlbum"
-        type="number"
-        [(ngModel)]="newAlbum.idAlbum"
-        name="idAlbum"
-        class="form-control"
-        required
-      />
-    </div>
-
-    <div class="mb-3">
       <label for="titreAlbum" class="form-label">Titre de l’album</label>
       <input
         id="titreAlbum"
@@ -38,7 +26,7 @@
       />
     </div>
 
-<!--     <div class="mb-3">
+     <div class="mb-3">
       <label for="idArtist">Artiste</label>
       <select
         id="idArtist"
@@ -49,11 +37,10 @@
       >
         <option [ngValue]="undefined" disabled>Choisir un artiste</option>
         @for (artist of artists; track artist.idArtist) {
-          <option [ngValue]="artist.idArtist">{{ artist.nomArtist }}</option>
+          <option [ngValue]="artist.idArtist">{{ artist.nomArtiste }}</option>
         }
       </select>
-    </div> -->
-
+    </div> 
     <div class="mb-3">
       <label for="dateAlbum" class="form-label">Date de création</label>
       <input

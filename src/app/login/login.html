@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row justify-content-md-center">
     <div class="col-md-4">
-      @if (erreur === 1) {
+      @if (err === 1) {
         <div class="alert alert-danger">
           <strong>Login ou mot de passe erronés.</strong>
         </div>
@@ -29,6 +29,9 @@
         </div>
         <div class="row justify-content-md-center">
           <button type="submit" class="btn btn-lg btn-primary mt-3">Connexion</button>
+        </div>
+        <div class="mt-3 text-center">
+          Vous n'avez pas un compte ? <a routerLink="/register">S'inscrire</a>
         </div>
       </form>
     </div>

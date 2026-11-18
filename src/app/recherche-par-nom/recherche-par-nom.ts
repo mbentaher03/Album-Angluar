@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Album } from '../model/album.model';
-import { Album as AlbumService } from '../services/album';
+import { AlbumService as AlbumService } from '../services/album';
 import { SearchFilterPipe } from './search-filter.pipe';
 
 @Component({

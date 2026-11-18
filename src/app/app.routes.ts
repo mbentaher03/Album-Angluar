@@ -8,6 +8,8 @@ import { ListeArtistsComponent } from './liste-artists/liste-artists';
 import { Login } from './login/login';
 import { adminGuard } from './services/admin.guard';
 import { Forbidden } from './forbidden/forbidden';
+import { Register } from './register/register';
+import { VerifyEmail } from './verify-email/verify-email';
 
 
 export const routes: Routes = [
@@ -19,5 +21,7 @@ export const routes: Routes = [
     {path: "rechercheParNom", component: RechercheParNom},
     {path: "listeArtists", component: ListeArtistsComponent, canActivate: [adminGuard]},
     {path: "login", component: Login},
+    {path: "register", component: Register},
+    {path: "verifyEmail", component: VerifyEmail},
     {path: "app-forbidden", component: Forbidden}
 ];

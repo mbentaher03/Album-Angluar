@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Album } from '../model/album.model';
-import { Album as AlbumService } from '../services/album';
+import { AlbumService as AlbumService } from '../services/album';
 import { AuthService } from '../services/auth.service';
 
 @Component({
